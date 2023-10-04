@@ -9,22 +9,105 @@ public class App {
         while (loop == true) {
             System.out.println("Welcome to Library");
             System.out.println("Please select an option from below given options");
-            System.out.println("1. Member Operations");
-            System.out.println("2. Book Operations");
-            System.out.println("3. Lending Operations");
-            System.out.println("4. Exit");
+            System.out.println("1. Add new Member");
+            System.out.println("2. Remove a Member");
+            System.out.println("3. View Member Details");
+            System.out.println("4. View all Members");
+            System.out.println("5. Add new Book");
+            System.out.println("6. Remove a Book");
+            System.out.println("7. View Book Details");
+            System.out.println("8. View all Books");
+            System.out.println("9. Issue a Book");
+            System.out.println("10. Return a Book");
+            System.out.println("11. View all Issued Books");
+            System.out.println("12. Calculate Fine by days");
+            System.out.println("13. Calculate fine for a Book by Book ID");
+            System.out.println("14. View all Overdue Books");
+            System.out.println("15. View lending details by Book ID");
+            System.out.println("16. Exit");
             int mainOption = scan.nextInt();
             switch (mainOption) {
                 case 1:
-                    System.out.println("You selected Member Operations");
+                    System.out.println("Enter Member ID");
+                    int memberIdToAdd = scan.nextInt();
+                    System.out.println("Enter Member Name");
+                    String memberNameToAdd = scan.next();
+                    Member member = new Member(memberIdToAdd, memberNameToAdd);
+                    library.addMember(member);
                     break;
                 case 2:
-                    System.out.println("You selected Book Operations");
+                    System.out.println("Enter Member ID");
+                    int MemberIdR = scan.nextInt();
+                    library.removeMember(MemberIdR);
                     break;
                 case 3:
-                    System.out.println("You selected Lending Operations");
+                    System.out.println("Enter Member ID");
+                    int MemberIdToView = scan.nextInt();
+                    library.viewMemberDetails(MemberIdToView);                    
                     break;
                 case 4:
+                    library.viewAllMembers();
+                    break;
+                case 5:
+                    System.out.println("Enter Book ID");
+                    int bookIdToAdd = scan.nextInt();
+                    System.out.println("Enter Book Name");
+                    String bookNameToAdd = scan.next();
+                    System.out.println("Enter Book Author");
+                    String bookAuthorToAdd = scan.next();
+                    System.out.println("Enter Book Subject");
+                    String bookSubjectToAdd = scan.next();
+                    Book book = new Book(bookIdToAdd, bookNameToAdd, bookAuthorToAdd, bookSubjectToAdd);
+                    library.addBook(book);
+                    break;
+                case 6:
+                    System.out.println("Enter Book ID");
+                    int bookIdToRemove = scan.nextInt();
+                    library.removeBook(bookIdToRemove);
+                    break;
+                case 7:
+                    System.out.println("Enter Book ID");
+                    int bookIdToView = scan.nextInt();
+                    library.viewBookDetails(bookIdToView);
+                    break;
+                case 8:
+                    library.viewAllBooks();
+                    break;
+                case 9:
+                    System.out.println("Enter Book ID");
+                    int bookIdToIssue = scan.nextInt();
+                    System.out.println("Enter Member ID");
+                    int memberIdToIssue = scan.nextInt();
+                    library.issueBook(bookIdToIssue, memberIdToIssue);
+                    break;
+                case 10:
+                    System.out.println("Enter Book ID");
+                    int bookIdToReturn = scan.nextInt();
+                    library.returnBook(bookIdToReturn);
+                    break;
+                case 11:
+                    library.viewAllRecords();
+                    break;
+                case 12:
+                    System.out.println("Enter number of days Overdue");
+                    int daysOverdue = scan.nextInt();
+                    library.calculateFine(daysOverdue);
+                    break;
+                case 13:
+                    System.out.println("Enter Book ID");
+                    int bookIdToCalculateFine = scan.nextInt();
+                    library.calculateFineByBook(bookIdToCalculateFine);
+                    break;
+                   
+                case 14:
+                    library.viewAllOverdueRecords();
+                    break;
+                case 15:
+                    System.out.println("Enter Book ID");
+                    int bookIdToViewRecord = scan.nextInt();
+                    library.viewRecordDetails(bookIdToViewRecord);
+                    break;
+                case 16:
                     System.out.println("Exiting the program");
                     System.out.println("Thank You");
                     loop = false;
@@ -33,7 +116,6 @@ public class App {
                     System.out.println("You entered a wrong option");
                     break;
             }
-
         }
     }
 }

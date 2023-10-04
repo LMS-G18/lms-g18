@@ -38,6 +38,8 @@ public class Record {
         System.out.println("Fine: " + fine);
     }
 
+    
+
     public Book getBook() {
         return book;
     }
