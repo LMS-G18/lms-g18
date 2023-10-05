@@ -9,7 +9,16 @@ public class Library {
 
     // Book Methods
     public void addBook(Book book) {
+        if (books.size() > 0) {
+            for (Book b : books) {
+                if (b.getBookId() == book.getBookId()) {
+                    System.out.println("Book with same ID already exists");
+                    return;
+                }
+            }
+        }
         books.add(book);
+        System.out.println("Book added successfully");
     }
 
     public void removeBook(int bookId) {
@@ -18,10 +27,11 @@ public class Library {
             if (book.getBookId() == bookId) {
                 books.remove(book);
                 found = true;
+                System.out.println("Book removed successfully");
             }
         }
         if (found == false) {
-            System.out.println("Book not found");
+            System.out.println("Book not found in library");
         }
     }
 
@@ -34,22 +44,33 @@ public class Library {
             }
         }
         if (found == false) {
-            System.out.println("Book not found");
+            System.out.println("Book not found in library");
         }
     }
 
     public void viewAllBooks() {
         for (Book book : books) {
             book.viewBookDetails();
+            System.out.println();
         }
         if (books.size() == 0) {
-            System.out.println("No books found");
+            System.out.println("No books found in library");
         }
     }
 
     // Member Methods
     public void addMember(Member member) {
+        if (members.size() > 0) {
+            for (Member m : members) {
+                if (m.getMemberId() == member.getMemberId()) {
+                    System.out.println("Member with same ID already exists");
+                    System.out.println("try again with different ID");
+                    return;
+                }
+            }
+        }
         members.add(member);
+        System.out.println("Member added successfully");
     }
 
     public void removeMember(int memberId) {
@@ -57,11 +78,12 @@ public class Library {
         for (Member member : members) {
             if (member.getMemberId() == memberId) {
                 members.remove(member);
+                System.out.println("Member removed successfully");
                 found = true;
             }
         }
         if (found == false) {
-            System.out.println("Member not found");
+            System.out.println("Registered member not found");
         }
     }
 
@@ -74,16 +96,17 @@ public class Library {
             }
         }
         if (found == false) {
-            System.out.println("Member not found");
+            System.out.println("Registered member not found");
         }
     }
 
     public void viewAllMembers() {
         for (Member member : members) {
             member.viewMemberDetails();
+            System.out.println();
         }
         if (members.size() == 0) {
-            System.out.println("No members found");
+            System.out.println("No registered members found");
         }
     }
 
@@ -95,60 +118,83 @@ public class Library {
         for (Book book : books) {
             if (book.getBookId() == bookId) {
                 bookFound = true;
-                for (Member member : members) {
-                    if (member.getMemberId() == memberId) {
-                        memberFound = true;
-                        Record record = new Record(book, member);
-                        records.add(record);
-                        book.setIssued(true);
-                        System.out.println("Book issued successfully");
+                if(book.getIsIssued() == false){
+                    for (Member member : members) {
+                        if (member.getMemberId() == memberId) {
+                            memberFound = true;
+                            Record record = new Record(book, member);
+                            records.add(record);
+                            book.setIssued(true);
+                            System.out.println("Book issued successfully");
+                        }
                     }
+                } else {
+                    System.out.println("Book already issued");
+                    return;
                 }
             }
         }
 
         if (bookFound == false) {
-            System.out.println("Book not found");
+            System.out.println("Book not found in library");
         } else if (memberFound == false) {
-            System.out.println("Member not found");
+            System.out.println("Registered member not found");
         }
     }
 
     public void returnBook(int bookId) {
         boolean found = false;
+        boolean bookFoundInLibrary = false;
         int fine = 0;
-        for (Record record : records) {
-            if (record.getBook().getBookId() == bookId) {
-                found = true;
-                record.setFine(calculateFineByBook(bookId));
-                fine = record.getFine();
-                System.out.println("Fine: " + fine);
-                record.getBook().setIssued(false);
-                records.remove(record);
-                System.out.println("Book returned successfully");
+        for (Book book : books) {
+            if (book.getBookId() == bookId) {
+                bookFoundInLibrary = true;
+                for (Record record : records) {
+                    if (record.getBook().getBookId() == bookId) {
+                        found = true;
+                        record.setFine(calculateFineByBook(bookId));
+                        fine = record.getFine();
+                        System.out.println("Fine: " + fine);
+                        record.getBook().setIssued(false);
+                        records.remove(record);
+                        System.out.println("Book returned successfully");
+                    }
+                }
             }
         }
-        if (found == false) {
-            System.out.println("Book not found");
+        if (bookFoundInLibrary == false) {
+            System.out.println("Book not found in library");
+        } else if (found == false) {
+            System.out.println("Book not found in issued records");
         }
     }
 
     public void viewRecordDetails(int bookId) {
         boolean found = false;
-        for (Record record : records) {
-            if (record.getBook().getBookId() == bookId) {
-                found = true;
-                record.viewRecordDetails();
+        boolean bookFoundInLibrary = false;
+
+        for (Book book : books) {
+            if (book.getBookId() == bookId) {
+                bookFoundInLibrary = true;
+                for (Record record : records) {
+                    if (record.getBook().getBookId() == bookId) {
+                        found = true;
+                        record.viewRecordDetails();
+                    }
+                }
             }
         }
-        if (found == false) {
-            System.out.println("Book not found");
+        if (bookFoundInLibrary == false) {
+            System.out.println("Book not found in library");
+        } else if (found == false) {
+            System.out.println("Book not found in issued records");
         }
     }
 
     public void viewAllRecords() {
         for (Record record : records) {
             record.viewRecordDetails();
+            System.out.println();
         }
         if (records.size() == 0) {
             System.out.println("No records found");
@@ -165,6 +211,7 @@ public class Library {
                     if (record.getMember().getMemberId() == memberId) {
                         record.viewRecordDetails();
                         recordFound = true;
+                        System.out.println();
                     }
                 }
             }
@@ -183,6 +230,7 @@ public class Library {
                 record.viewRecordDetails();
                 System.out.println();
                 overdueRecordFound = true;
+                System.out.println();
             }
         }
         if (overdueRecordFound == false) {
@@ -240,7 +288,7 @@ public class Library {
             }
         }
         if (bookFound == 0) {
-            System.out.println("Book not found");
+            System.out.println("Book not found in library");
         }
         return fineAmount;
     }

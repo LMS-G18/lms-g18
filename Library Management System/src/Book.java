@@ -19,7 +19,9 @@ public class Book {
     public String getBookName() {
         return bookName;
     }
-    
+    public boolean getIsIssued() {
+        return isIssued;
+    }
     public void setIssued(boolean isIssued) {
         this.isIssued = isIssued;
     }

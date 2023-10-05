@@ -6,7 +6,7 @@ public class Record {
     private Member member;
     private LocalDate issueDate = LocalDate.now();
     private LocalDate returnDate = LocalDate.now().plusDays(7);
-    private int fine;
+    private int fine = 0;
 
     public Record(Book book, Member member) {
         this.book = book;
@@ -53,9 +53,6 @@ public class Record {
         return member;
     }
 
-    public LocalDate getIssueDate() {
-        return issueDate;
-    }
 
     public LocalDate getReturnDate() {
         return returnDate;
