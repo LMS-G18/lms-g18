@@ -6,7 +6,7 @@ public class Record {
     private Member member;
     private LocalDate issueDate = LocalDate.now();
     private LocalDate returnDate = LocalDate.now().plusDays(7);
-    private int fine;
+    private int fine = 0;
 
     public Record(Book book, Member member) {
         this.book = book;
@@ -15,12 +15,19 @@ public class Record {
 
     public int calculateFine(int overdueDays) {
         int fineAmount = 0;
-        if (overdueDays <= 7) {
-            fineAmount = overdueDays * 50;
-        } else {
-            fineAmount = 7 * 50 + (overdueDays - 7) * 100;
+        try {
+            if (overdueDays <= 7) {
+                fineAmount = overdueDays * 50;
+            } else {
+                fineAmount = 7 * 50 + (overdueDays - 7) * 100;
+            }
+            return fineAmount;
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return 0;
         }
-        return fineAmount;
+
     }
 
     public void viewRecordDetails() {
@@ -38,8 +45,6 @@ public class Record {
         System.out.println("Fine: " + fine);
     }
 
-    
-
     public Book getBook() {
         return book;
     }
@@ -48,15 +53,22 @@ public class Record {
         return member;
     }
 
-    public LocalDate getIssueDate() {
-        return issueDate;
-    }
-
     public LocalDate getReturnDate() {
         return returnDate;
     }
 
     public int getFine() {
         return fine;
+    }
+
+    public void setFine(int fine) {
+        this.fine = fine;
+    }
+    // just for demonstration purposes
+    public void setIssuedDate(LocalDate issueDate) {
+        this.issueDate = issueDate;
+    }
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
     }
 }
