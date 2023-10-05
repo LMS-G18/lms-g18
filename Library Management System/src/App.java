@@ -111,11 +111,13 @@ public class App {
                     System.out.println("Exiting the program");
                     System.out.println("Thank You");
                     loop = false;
+                    
                     break;
                 default:
                     System.out.println("You entered a wrong option");
                     break;
             }
         }
+        scan.close();
     }
 }

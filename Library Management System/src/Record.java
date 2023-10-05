@@ -15,12 +15,19 @@ public class Record {
 
     public int calculateFine(int overdueDays) {
         int fineAmount = 0;
-        if (overdueDays <= 7) {
-            fineAmount = overdueDays * 50;
-        } else {
-            fineAmount = 7 * 50 + (overdueDays - 7) * 100;
+        try {
+            if (overdueDays <= 7) {
+                fineAmount = overdueDays * 50;
+            } else {
+                fineAmount = 7 * 50 + (overdueDays - 7) * 100;
+            }
+            return fineAmount;
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return 0;
         }
-        return fineAmount;
+
     }
 
     public void viewRecordDetails() {
@@ -37,8 +44,6 @@ public class Record {
         }
         System.out.println("Fine: " + fine);
     }
-
-    
 
     public Book getBook() {
         return book;
@@ -58,5 +63,9 @@ public class Record {
 
     public int getFine() {
         return fine;
+    }
+
+    public void setFine(int fine) {
+        this.fine = fine;
     }
 }

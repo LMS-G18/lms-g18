@@ -3,6 +3,7 @@ public class Book {
     private String bookName;
     private String bookAuthor;
     private String subject;
+    private boolean isIssued = false;
 
     public Book(int bookId, String bookName, String bookAuthor, String subject) {
         this.bookId = bookId;
@@ -19,11 +20,16 @@ public class Book {
         return bookName;
     }
     
+    public void setIssued(boolean isIssued) {
+        this.isIssued = isIssued;
+    }
+    
 
     public void viewBookDetails() {
         System.out.println("Book ID: " + bookId);
         System.out.println("Book Name: " + bookName);
         System.out.println("Book Author: " + bookAuthor);
         System.out.println("Subject: " + subject);
+        System.out.println("Issued: " + isIssued);
     }
 }
