@@ -118,7 +118,7 @@ public class Library {
         for (Book book : books) {
             if (book.getBookId() == bookId) {
                 bookFound = true;
-                if(book.getIsIssued() == false){
+                if (book.getIsIssued() == false) {
                     for (Member member : members) {
                         if (member.getMemberId() == memberId) {
                             memberFound = true;
@@ -293,4 +293,29 @@ public class Library {
         return fineAmount;
     }
 
+    public Book findBookById(int bookId) {
+        for (Book book : books) {
+            if (book.getBookId() == bookId) {
+                return book;
+            }
+        }
+        return null;
+    }
+
+    // just for demonstration purposes
+    public void changeIssuedDate(int bookId, LocalDate newIssuedDate) {
+        Book book = findBookById(bookId);
+        if (book == null) {
+            System.out.println("Invalid book ID");
+            return;
+        }
+        LocalDate newReturnDate = newIssuedDate.plusDays(7);
+        for (Record record : records) {
+            if (record.getBook().getBookId() == bookId) {
+                record.setIssuedDate(newIssuedDate);
+                record.setReturnDate(newReturnDate);
+            }
+        }
+        System.out.println("Issued date updated successfully");
+    }
 }

@@ -53,7 +53,6 @@ public class Record {
         return member;
     }
 
-
     public LocalDate getReturnDate() {
         return returnDate;
     }
@@ -64,5 +63,12 @@ public class Record {
 
     public void setFine(int fine) {
         this.fine = fine;
+    }
+    // just for demonstration purposes
+    public void setIssuedDate(LocalDate issueDate) {
+        this.issueDate = issueDate;
+    }
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
     }
 }

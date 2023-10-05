@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.time.LocalDate;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -25,8 +26,9 @@ public class App {
             System.out.println("13. Calculate fine for a Book by Book ID");
             System.out.println("14. View all Overdue Books");
             System.out.println("15. View lending details by Book ID");
-            System.out.println("16. Exit");
-            int mainOption = 0 ;
+            System.out.println("16. Change the issued date of a book(FOR DEMO)");
+            System.out.println("17. Exit");
+            int mainOption = 0;
             try {
                 mainOption = scan.nextInt();
             } catch (Exception e) {
@@ -39,8 +41,9 @@ public class App {
                     try {
                         System.out.println("Enter Member ID");
                         int memberIdToAdd = scan.nextInt();
+                        scan.nextLine();
                         System.out.println("Enter Member Name");
-                        String memberNameToAdd = scan.next();
+                        String memberNameToAdd = scan.nextLine();
                         Member member = new Member(memberIdToAdd, memberNameToAdd);
                         library.addMember(member);
                         System.out.println();
@@ -75,12 +78,13 @@ public class App {
                     try {
                         System.out.println("Enter Book ID");
                         int bookIdToAdd = scan.nextInt();
+                        scan.nextLine();
                         System.out.println("Enter Book Name");
-                        String bookNameToAdd = scan.next();
+                        String bookNameToAdd = scan.nextLine();
                         System.out.println("Enter Book Author");
-                        String bookAuthorToAdd = scan.next();
+                        String bookAuthorToAdd = scan.nextLine();
                         System.out.println("Enter Book Subject");
-                        String bookSubjectToAdd = scan.next();
+                        String bookSubjectToAdd = scan.nextLine();
                         Book book = new Book(bookIdToAdd, bookNameToAdd, bookAuthorToAdd, bookSubjectToAdd);
                         library.addBook(book);
                         System.out.println();
@@ -131,7 +135,6 @@ public class App {
                         library.returnBook(bookIdToReturn);
                         System.out.println();
                     } catch (Exception e) {
-                        System.out.println(e);
                     }
                     break;
                 case 11:
@@ -173,10 +176,28 @@ public class App {
                     }
                     break;
                 case 16:
+                    try {
+                        System.out.println("Enter Book ID");
+                        int bookIdToChangeDate = scan.nextInt();
+                        System.out.println("Enter new Issue Date (yyyy-MM-dd)");
+                        LocalDate newIssueDate = null;
+                        String newIssueDateStr = scan.next();
+                        try {
+                            newIssueDate = LocalDate.parse(newIssueDateStr);
+                            library.changeIssuedDate(bookIdToChangeDate, newIssueDate);
+                            System.out.println();
+                        } catch (Exception e) {
+                            System.out.println("Invalid date format. Please enter date in yyyy-MM-dd format.");
+                        }
+                        break;
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+
+                case 17:
                     System.out.println("Exiting the program");
                     System.out.println("Thank You");
                     loop = false;
-
                     break;
                 default:
                     System.out.println("You entered a wrong option");
